@@ -1,0 +1,10 @@
+{ "expiration": "2013-01-01T00:00:00Z",
+  "conditions": [ 
+    {"bucket": "we-estimate-videos"}, 
+    ["starts-with", "$key", "upload/"],
+    {"acl": "public-read"},
+    {"success_action_redirect": "http://we.locksmithdon.net/upload-success"},
+    ["starts-with", "$Content-Type", "video"],
+    ["content-length-range", 0, 4194304]
+  ]
+}
