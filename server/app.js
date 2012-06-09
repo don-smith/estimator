@@ -22,10 +22,14 @@ http.createServer(function(req, res) {
   if(req.url == '/' && req.method.toLowerCase() == 'get') {
     res.writeHead(200, {'Content-Type': 'text/html'});
     res.write('<!DOCTYPE html><html><head><title>We-estimate</title></head><body>');
-    var files = fs.readdirSync(process.cwd()+'/media');
-    for(var i=0; i < files.length; i++) {
-      res.write('<a href="/media/'+ files[i] +'">'+ files[i] +'</a><br/>');
-    }
+
+    //var files = fs.readdirSync(process.cwd()+'/media');
+    //for(var i=0; i < files.length; i++) {
+    //  res.write('<a href="/media/'+ files[i] +'">'+ files[i] +'</a><br/>');
+    //}
+
+    res.write('<em>This will be replaced by a list of estimate requests</em>')
+
     res.end('</body></html>');
   }
 
