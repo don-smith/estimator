@@ -1,116 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
-        
+        <title>Estimator</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
-        <meta charset="utf-8">
-            
-            
-            <!-- iPad/iPhone specific css below, add after your main css >
-             <link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
-             <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
-             -->
-            <!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
-            <script type="text/javascript" charset="utf-8" src="cordova-1.7.0.js"></script>
-            <script type="text/javascript">
-                
-                
-                // If you want to prevent dragging, uncomment this section
-                /*
-                 function preventBehavior(e) 
-                 { 
-                 e.preventDefault(); 
-                 };
-                 document.addEventListener("touchmove", preventBehavior, false);
-                 */
-                
-                /* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-                 see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-                 for more details -jm */
-                /*
-                 function handleOpenURL(url)
-                 {
-                 // TODO: do something with the url passed in.
-                 }
-                 */
-                
-                function onBodyLoad()
-                {
-                    document.addEventListener("deviceready", onDeviceReady, false);
-                }
-                
-                /* When this function is called, Cordova has been initialized and is ready to roll */
-                /* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-                 see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-                 for more details -jm */
-                function onDeviceReady()
-                {
-                    // do your thing!
-                    //navigator.notification.alert("Cordova is working")
-                }
-                
-                // Called when capture operation is finished
-                //
-                function captureSuccess(mediaFiles) {
-                    var i, len;
-                    for (i = 0, len = mediaFiles.length; i < len; i += 1) {
-                        uploadFile(mediaFiles[i]);
-                        //navigator.notification.alert("All good! for " + mediaFiles[i].fullPath)
-                    }       
-                }
-                
-                // Called if something bad happens.
-                // 
-                function captureError(error) {
-                    var msg = 'An error occurred during capture: ' + error.code;
-                    navigator.notification.alert(msg, null, 'Uh oh!');
-                }
-                
-                // A button will call this function
-                //
-                function captureVideo() {
-                    // Launch device video recording application
-                    navigator.device.capture.captureVideo(captureSuccess, captureError);
-                }
-                
-                // Upload files to server
-                function uploadFile(mediaFile) {
-                    var ft = new FileTransfer(),
-                    path = mediaFile.fullPath,
-                    name = mediaFile.name;
-                    
-                    ft.upload(path,
-                      //"http://we.locksmithdon.net/upload",
-                      "https://we-estimate-videos.s3.amazonaws.com/",
-                      function(result) {
-                        console.log('Upload success: ' + result.responseCode);
-                        console.log(result.bytesSent + ' bytes sent');
-                      }, function(error) {
-                        console.log('Error uploading file ' + path + ': ' + error.code);
-                      },
-                      { // other fields
-                        key: 'upload/${filename}', 
-                        AWSAccessKeyId: '1Z9R29H6R69CHFGVJ202',
-                        acl: 'public-read',
-                        success_action_redirect: 'http://we.locksmithdon.net/upload-success',
-                        policy: 'eyAiZXhwaXJhdGlvbiI6ICIyMDEzLTAxLTAxVDAwOjAwOjAwWiIsCiAgImNvbmRpdGlvbnMiOiBbIAogICAgeyJidWNrZXQiOiAid2UtZXN0aW1hdGUtdmlkZW9zIn0sIAogICAgWyJzdGFydHMtd2l0aCIsICIka2V5IiwgInVwbG9hZC8iXSwKICAgIHsiYWNsIjogInB1YmxpYy1yZWFkIn0sCiAgICB7InN1Y2Nlc3NfYWN0aW9uX3JlZGlyZWN0IjogImh0dHA6Ly93ZS5sb2Nrc21pdGhkb24ubmV0L3VwbG9hZC1zdWNjZXNzIn0sCiAgICBbInN0YXJ0cy13aXRoIiwgIiRDb250ZW50LVR5cGUiLCAidmlkZW8iXSwKICAgIFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLCAwLCA0MTk0MzA0XQogIF0KfQ==',
-                        signature: 'NmZvQcByyps38a8zI8MnhsHMcjw=',
-                        'Content-Type': 'video/quicktime'
-                      });   
-                }
-                
-                </script>
-                <style>
-                    body { font-family: arial, helvetica, sans-serif; }
-                    button {font-size: 1.4em;}
-                </style>
-            </head>
-    <body onload="onBodyLoad()">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <link rel="stylesheet" href="css/app.css" type="text/css" />   
+         <!-- iPad/iPhone specific css below, add after your main css >
+          <link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
+          <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
+         -->
+    </head>
+    <body>
         <h1>Estimator</h1>
         <h2>Courtesy of We-estimate.</h2>
         <h3>Accurate collision repair estimates every-time</h3>
-        <button onclick="captureVideo();">Capture Video</button><br>
+        <button id="captureVideo">Capture Video</button><br>
         <p>Tips for the best results</p>
         <ul>
             <li>Keep videos under 2 minutes</li>
@@ -118,5 +22,10 @@
             <li>Ensure enough light to see details of damage</li>
             <li>With a steady hand, pause over WoF for 2 seconds</li>
         </ul>
+        <p><em>&copy; 2012 We-estimate</em></p>
+        <div id="status">Uploading video. Please wait before closing app.</div>
+        <script type="text/javascript" src="js/cordova-1.7.0.js"></script>
+        <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
     </body>
 </html>

@@ -1,0 +1,21 @@
+body { 
+	font-family: arial, helvetica, sans-serif; 
+}
+
+button {
+	font-size: 1.4em;
+}
+
+#status {
+	display: none;
+	height: 30px;
+	line-height: 30px;
+	background-color: yellow;
+	background-color: rgba(255, 255, 0, 0.7);
+	font-weight: bold;
+	text-align: center;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+}
